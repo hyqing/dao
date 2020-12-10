@@ -1,10 +1,12 @@
 package org.example.dao.controller;
 
 import org.example.dao.entity.common.CommonParam;
+import org.example.dao.entity.ms.App;
 import org.example.dao.entity.one.User;
 import org.example.dao.entity.tow.Student;
 import org.example.dao.repository.one.UserRepository;
 import org.example.dao.repository.tow.StudentRepository;
+import org.example.dao.service.AppService;
 import org.example.dao.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +27,9 @@ public class TestController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private AppService appService;
 
     @RequestMapping("/user")
     private List<User> getUser() {
@@ -53,5 +58,16 @@ public class TestController {
     @RequestMapping("/fromRedis")
     private String fromRedis() {
         return userService.getString("NODE_ROLE_USER");
+    }
+
+    @RequestMapping("/app/read")
+    private List<App> getApp() {
+        return appService.getApp();
+    }
+
+    @RequestMapping("/app/write")
+    private String addApp() {
+        appService.addApp();
+        return "suc";
     }
 }
