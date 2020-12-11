@@ -60,14 +60,13 @@ public class TestController {
         return userService.getString("NODE_ROLE_USER");
     }
 
-    @RequestMapping("/app/read")
-    private List<App> getApp() {
-        return appService.getApp();
+    @RequestMapping("/app/slave")
+    private List<App> formSlave() {
+        return appService.formSlave();
     }
 
-    @RequestMapping("/app/write")
-    private String addApp() {
-        appService.addApp();
-        return "suc";
+    @RequestMapping("/app/master")
+    private List<App> formMaster() {
+        return appService.formMaster();
     }
 }

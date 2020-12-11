@@ -19,15 +19,12 @@ public class AppService {
     private AppRepository appRepository;
 
     @RoutingDataSource(value = Datasources.SLAVE_DB)
-    public List<App> getApp() {
+    public List<App> formSlave() {
         return appRepository.findAll();
     }
 
     @RoutingDataSource()
-    public App addApp() {
-        App app = new App();
-        app.setName("dy");
-        app.setRemark("抖音");
-        return appRepository.save(app);
+    public List<App> formMaster() {
+        return appRepository.findAll();
     }
 }
