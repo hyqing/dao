@@ -41,26 +41,4 @@ public class DataSourceConfig {
         return dataSource;
     }
 
-    //destroy-method="close"的作用是当数据库连接不使用的时候,就把该连接重新放到数据池中,方便下次使用调用.
-    @Bean(destroyMethod = "close", name = Datasources.MASTER_DB)
-    public DataSource dataSource() {
-        System.out.println("master初始化----------");
-        HikariDataSource dataSource = new HikariDataSource();
-        dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/master");
-        dataSource.setUsername("root");
-        dataSource.setPassword("123456");
-        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        return dataSource;
-    }
-
-    @Bean(destroyMethod = "close", name = Datasources.SLAVE_DB)
-    public DataSource dataSourceSlave() {
-        System.out.println("slave初始化----------");
-        HikariDataSource dataSource = new HikariDataSource();
-        dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/slave");
-        dataSource.setUsername("root");
-        dataSource.setPassword("123456");
-        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        return dataSource;
-    }
 }

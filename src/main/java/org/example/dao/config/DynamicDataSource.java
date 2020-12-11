@@ -14,35 +14,42 @@ import java.util.Map;
 /**
  * Created by hyq on 2020/12/10 20:18.
  */
-@Component
-@Primary
 public class DynamicDataSource extends AbstractRoutingDataSource {
 
-    @Autowired
-    @Qualifier(Datasources.MASTER_DB)
-    private DataSource masterDB;
+    /**
+     * ThreadLocal 用于提供线程局部变量，在多线程环境可以保证各个线程里的变量独立于其它线程里的变量。
+     * 也就是说 ThreadLocal 可以为每个线程创建一个【单独的变量副本】，相当于线程的 private static 类型变量。
+     */
+    private static final ThreadLocal<String> CONTEXT_HOLDER = new ThreadLocal<>();
 
-    @Autowired
-    @Qualifier(Datasources.SLAVE_DB)
-    private DataSource slaveDB;
+    /**
+     * 决定使用哪个数据源之前需要把多个数据源的信息以及默认数据源信息配置好
+     *
+     * @param defaultTargetDataSource 默认数据源
+     * @param targetDataSources       目标数据源
+     */
+    public DynamicDataSource(DataSource defaultTargetDataSource, Map<Object, Object> targetDataSources) {
+        super.setDefaultTargetDataSource(defaultTargetDataSource);
+        super.setTargetDataSources(targetDataSources);
+        super.afterPropertiesSet();
+    }
 
     @Override
     protected Object determineCurrentLookupKey() {
-        System.out.println("数据源为{}:" + DataSourceContextHolder.getDB());
-        return DataSourceContextHolder.getDB();
+        System.out.println("选择数据库");
+        return getDataSource();
     }
 
-    /**
-     * 配置数据源信息
-     */
-    @Override
-    public void afterPropertiesSet() {
-        Map<Object, Object> map = new HashMap<>();
-        map.put(Datasources.MASTER_DB, masterDB);
-        map.put(Datasources.SLAVE_DB, slaveDB);
-        setTargetDataSources(map);
-        setDefaultTargetDataSource(masterDB);
-//        super.afterPropertiesSet();
+    public static void setDataSource(String dataSource) {
+        CONTEXT_HOLDER.set(dataSource);
+    }
+
+    public static String getDataSource() {
+        return CONTEXT_HOLDER.get();
+    }
+
+    public static void clearDataSource() {
+        CONTEXT_HOLDER.remove();
     }
 
 }

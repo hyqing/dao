@@ -29,7 +29,7 @@ public class MasterDataSourceConfig {
 
     // 配置数据源
     @Autowired
-    @Qualifier("masterDB")
+    @Qualifier("dataSourceMaster")
     private DataSource masterDB;
 
     @Bean(name = "entityManagerFactoryDataBaseMaster")

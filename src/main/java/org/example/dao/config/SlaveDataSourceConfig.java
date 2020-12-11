@@ -27,7 +27,7 @@ public class SlaveDataSourceConfig {
 
     // 配置数据源
     @Autowired
-    @Qualifier("slaveDB")
+    @Qualifier("dataSourceSlave")
     private DataSource slaveDB;
 
     @Bean(name = "entityManagerFactoryDataBaseSlave")
