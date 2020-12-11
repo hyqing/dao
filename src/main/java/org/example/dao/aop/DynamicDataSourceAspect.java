@@ -7,6 +7,7 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.example.dao.annotation.RoutingDataSource;
 import org.example.dao.config.DataSourceContextHolder;
+import org.example.dao.config.DynamicDataSource;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
@@ -27,7 +28,7 @@ public class DynamicDataSourceAspect {
             RoutingDataSource routingDataSource = method.getDeclaredAnnotation(RoutingDataSource.class);
             dataSource = routingDataSource.value();
         }
-        DataSourceContextHolder.setDB(dataSource);
+        DynamicDataSource.setDataSource(dataSource);
     }
 
     @After("@annotation(org.example.dao.annotation.RoutingDataSource)")
