@@ -18,7 +18,7 @@ public class DataSourceConfig {
 
 
     @Bean(name = "oneDataSource")
-    @Primary
+//    @Primary
     public DataSource oneDataSource() {
         System.out.println("oneDataSource初始化----111111");
         HikariDataSource dataSource = new HikariDataSource();
